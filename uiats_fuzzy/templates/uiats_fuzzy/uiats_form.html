@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>The Unruptured Intracranial Aneurysm Treatment Score</title>
+  </head>
+  <body>
+    {% load static %}
+
+    <link rel="stylesheet" type="text/css" href="{% static 'uiats_fuzzy/style.css' %}">
+
+    <h1 class="text-center"> The Unruptured Intracranial Aneurysm Treatment Score</h1>
+
+    {% if valid_submission %}
+    <div class="border">
+      <h3 class="text-center"> Results: </h3>
+      <p class="text-center">Score in favor of aneurysm repair: <b>{{ repairScore }} <img class="Info" src="{% static 'uiats_fuzzy/images/info.png' %}" alt="Info" title="
+Aneurysm repair is defined as any type of surgical or endovascular repair of an unruptured intracranial aneurysm.
+      " width="17" height="17"></b></p>
+      <p class="text-center">Score in favor of aneurysm conservative management: <b>{{ conservativeManagementScore }} <img class="Info" src="{% static 'uiats_fuzzy/images/info.png' %}" alt="Info" title="
+Conservative management is defined as clinical and/or radiologic follow-up and
+any medical treatment (e.g., for hypertension or epilepsy) or modification
+of lifestyle risk factors (e.g., cessation of smoking, cessation of alcohol or drug consumption).
+      " width="17" height="17"></b></p>
+      <p class="text-center"><b>{{ conclusion }}</b></p>
+      </div>
+      <br>
+    {% endif %}
+
+    <form action="" method="post">
+      {% csrf_token %}
+      {{ form.non_field_errors}}
+      <table class="table-center" id="uiats_table">
+        <tr>
+          <th>Age</th>
+          <th></th>
+          <th>Years</th>
+        </tr>
+        <tr>
+          {{ form.age.errors }}
+          <td>{{ form.age.label_tag }}</td>
+          <td>  </td>
+          <td> {{ form.age }} </td>
+        </tr>
+        <tr>
+          <td>  </td>
+          <td>  </td>
+          <td>  </td>
+        </tr>
+        <tr>
+          <th>Risk factor incidence</th>
+          <th> Applicable <img class="Info" src="{% static 'uiats_fuzzy/images/info.png' %}" alt="Info" title="Select if this factor is applicable to the patient or not." width="17" height="17"></th>
+          <th> Modifier (%) <img class="Info" src="{% static 'uiats_fuzzy/images/info.png' %}" alt="Info" title="
+Optionally specifiy in percent how much this factor should be weighted. 
+This could be useful if a factor is somewhat, but not fully applicable." width="17" height="17"><div id="modInfo"></div></th>
+        </tr>
+        <tr>
+          {{ form.prevSAH.errors }}
+          <td> {{ form.prevSAH.label_tag }} </td>
+          <td> {{ form.prevSAH }}</td>
+          <td> {{ form.prevSAHConf }} </td>
+        </tr>
+        <tr>
+          {{ form.famSAH.errors }}
+          <td>{{ form.famSAH.label_tag }} <img class="Info" src="{% static 'uiats_fuzzy/images/info.png' %}" alt="Info" title="
+Familial aneurysms are considered to be present in families in which 
+2 or more first-degree relatives were diagnosed with a unruptured 
+intracranial aneurysm or subarachnoid hemorrhage previously." width="17" height="17"></td>
+          <td>{{ form.famSAH }}</td>
+          <td>{{ form.famSAHConf }}</td>
+        </tr>
+        <tr>
+          {{ form.jfiEth.errors }}
+          <td>{{ form.jfiEth.label_tag }} </td>
+          <td>{{ form.jfiEth }}</td>
+          <td>{{ form.jfiEthConf }}</td>
+        </tr>
+        <tr>
+          {{ form.smoking.errors }}
+          <td> {{ form.smoking.label_tag }} <img class="Info" src="{% static 'uiats_fuzzy/images/info.png' %}" alt="Info" title="
+Current cigarette smoking is defined as a risk factor for adults who had smoked 100 cigarettes in their lifetime 
+and smoked cigarettes every day (daily) or some days (nondaily) at the time of clinical presentation." width="17" height="17"></td>
+          <td> {{ form.smoking }} </td>
+          <td> {{ form.smokingConf }} </td>
+        </tr>
+        <tr>
+          {{ form.hypertension.errors }}
+          <td> {{ form.hypertension.label_tag }} <img class="Info" src="{% static 'uiats_fuzzy/images/info.png' %}" alt="Info" title="
+Hypertension, whether treated or untreated, is defined as systolic blood pressure 
+greater than 140 mm Hg and/or diastolic blood pressure greater than 90 mmHg." width="17" height="17"></td>
+          <td> {{ form.hypertension }} </td>
+          <td> {{ form.hypertensionConf }} </td>
+        </tr>
+        <tr>
+          {{ form.kidneyDisease.errors }}
+          <td> {{ form.kidneyDisease.label_tag }} </td>
+          <td> {{ form.kidneyDisease }} </td>
+          <td> {{ form.kidneyDiseaseConf }} </td>
+        </tr>
+        <tr>
+          {{ form.drugAbuse.errors }}
+          <td> {{ form.drugAbuse.label_tag }} <img class="Info" src="{% static 'uiats_fuzzy/images/info.png' %}" alt="Info" title="
+Current drug abuse is defined as a risk factor in those with recent 
+(within 1 year of clinical presentation) cocaine or amphetamine exposure." width="17" height="17"></td>
+          <td> {{ form.drugAbuse }} </td>
+          <td> {{ form.drugAbuseConf }} </td>
+        </tr>
+        <tr>
+          {{ form.alcoholAbuse.errors }}
+          <td> {{ form.alcoholAbuse.label_tag }} <img class="Info" src="{% static 'uiats_fuzzy/images/info.png' %}" alt="Info" title="
+Current alcohol abuse is defined as a risk factor in those with recent (within 1 year 
+of clinical presentation) heavy alcohol consumption (>300 g ethanol weekly)." width="17" height="17"></td>
+          <td> {{ form.alcoholAbuse }} </td>
+          <td> {{ form.alcoholAbuseConf }} </td>
+        </tr>
+        <tr>
+          <td>  </td>
+          <td>  </td>
+          <td>  </td>
+        </tr>
+        <tr>
+          <th>Clinical Symptoms related to unruptured intracranial aneurysms </th>
+          <th>Applicable</th>
+          <th>Modifier (%)</th>
+        </tr>
+        <tr>
+          {{ form.cranialNerveDeficit.errors }}
+          <td>{{ form.cranialNerveDeficit.label_tag }} <img class="Info" src="{% static 'uiats_fuzzy/images/info.png' %}" alt="Info" title="
+Cranial nerve deficits are defined as any neurologic deficits from compression of a cranial
+nerve, e.g., visual disturbances, oculomotor dysfunction for anterior circulation unruptured 
+intracranial aneurysms, and/or lower cranial nerve deficits (IX, X, or XI) for posterior 
+circulation unruptured intracranial aneurysms." width="17" height="17"></td>
+          <td> {{ form.cranialNerveDeficit }} </td>
+          <td>{{ form.cranialNerveDeficitConf }}</td>
+        </tr>
+        <tr>
+          {{ form.massEffect.errors }}
+          <td> {{ form.massEffect.label_tag }} <img class="Info" src="{% static 'uiats_fuzzy/images/info.png' %}" alt="Info" title="
+Clinical or radiologic signs of mass effect are defined as any symptoms or findings indicative
+of a global or focal space-occupying effect from an unruptured intracranial aneurysm, such as 
+progressive headaches without subarachnoid hemorrhage, nausea, vomiting, focal neurologic or 
+radiologic findings (midline shift and/or herniation, edema, and cranial nerve compression)." width="17" height="17"></td>
+          <td> {{ form.massEffect }} </td>
+          <td> {{ form.massEffectConf }} </td>
+        </tr>
+        <tr>
+          {{ form.thromboembolicEvents.errors }}
+          <td> {{ form.thromboembolicEvents.label_tag }} </td>
+          <td> {{ form.thromboembolicEvents }} </td>
+          <td> {{ form.thromboembolicEventsConf }} </td>
+        </tr>
+        <tr>
+          {{ form.epilepsy.errors }}
+          <td> {{ form.epilepsy.label_tag }} </td>
+          <td> {{ form.epilepsy }} </td>
+          <td> {{ form.epilepsyConf }} </td>
+        </tr>
+        <tr>
+          <td>  </td>
+          <td>  </td>
+          <td>  </td>
+        </tr>
+        <tr>
+          <th>Other patient related factors</th>
+          <th> Applicable </th>
+          <th> Modifier (%)</th>
+        </tr>
+        <tr>
+          {{ form.fearOfRupture.errors }}
+          <td> {{ form.fearOfRupture.label_tag }} </td>
+          <td> {{ form.fearOfRupture }} </td>
+          <td> {{ form.fearOfRuptureConf }} </td>
+        </tr>
+        <tr>
+          {{ form.multiplicity.errors }}
+          <td> {{ form.multiplicity.label_tag }} </td>
+          <td> {{ form.multiplicity }} </td>
+          <td> {{ form.multiplicityConf }} </td>
+        </tr>
+        <tr>
+          <td>  </td>
+          <td>  </td>
+          <td>  </td>
+        </tr>
+        <tr>
+          <th> Life expectancy due to chronic and/or malignant diseases </th>
+          <th></th>
+          <th>Years </th>
+        </tr>
+        <tr>
+          {{ form.lifeExpectancy.errors }}
+          <td>{{ form.lifeExpectancy.label_tag }}<img class="InfoLeft" src="{% static 'uiats_fuzzy/images/info.png' %}" alt="Info" title="
+Chronic or malignant disease is defined as any cardiovascular, pulmonary, renal, 
+gastrointestinal, musculoskeletal, or CNS disorder of nonmalignant or malignant
+etiology that impaired the patient’s life expectancy." width="17" height="17"></td>
+          <td></td>
+          <td> {{ form.lifeExpectancy }}</td>
+        </tr>
+        <tr>
+          <td>  </td>
+          <td>  </td>
+          <td>  </td>
+        </tr>
+        <tr>
+          <th>Comorbid diseases</th>
+          <th>Applicable</th>
+          <th>Modifier (%)</th>
+        </tr>
+        <tr>
+          {{ form.neurocognitiveDisorder.errors }}
+          <td>{{ form.neurocognitiveDisorder.label_tag }}<img class="InfoLeft" src="{% static 'uiats_fuzzy/images/info.png' %}" alt="Info" title="
+Neurocognitive disorders are defined as Alzheimer disease or other etiologies for
+dementia that result in impairment of the patient’s ability to live alone." width="17" height="17"></td>
+          <td> {{ form.neurocognitiveDisorder }} </td>
+          <td> {{ form.neurocognitiveDisorderConf }} </td>
+        </tr>
+        <tr>
+          {{ form.coagulopathies.errors }}
+          <td>{{ form.coagulopathies.label_tag }}<img class="InfoLeft" src="{% static 'uiats_fuzzy/images/info.png' %}" alt="Info" title="
+Concomitant coagulopathies are defined as hemophilia and von Willebrand disease. 
+Concomitant thrombophilic diseases are defined as factor V Leiden mutation, antiphospholipid 
+antibody syndrome, antithrombin III deficiency, or protein C/S deficiency." width="17" height="17"></td>
+          <td>{{ form.coagulopathies }}</td>
+          <td>{{ form.coagulopathiesConf }}</td>
+        </tr>
+        <tr>
+          {{ form.psychiatricDisorder.errors }}
+          <td>{{ form.psychiatricDisorder.label_tag }} <img class="Info" src="{% static 'uiats_fuzzy/images/info.png' %}" alt="Info" title="
+Psychiatric disorders are defined as clinical depression, bipolar affective disorder, 
+schizoaffective disorder, or obsessive-compulsive disorder resulting in impairment of 
+the patient’s ability to live alone." width="17" height="17"></td>
+          <td>{{ form.psychiatricDisorder }}</td>
+          <td>{{ form.psychiatricDisorderConf }}</td>
+        </tr>
+        <tr>
+          <td>  </td>
+          <td>  </td>
+          <td>  </td>
+        </tr>
+        <tr>
+          <th>Maximum diameter </th>
+          <th></th>
+          <th>Millimeters</th>
+        </tr>
+        <tr>
+          {{ form.maxDiameter.errors }}
+          <td>{{ form.maxDiameter.label_tag }} <img class="Info" src="{% static 'uiats_fuzzy/images/info.png' %}" alt="Info" title="
+Aneurysm size is defined as the greatest aneurysm diameter, measured 
+using 3-dimensional reconstruction of the catheter angiograms." width="17" height="17"></td>
+          <td></td>
+          <td>{{ form.maxDiameter }}</td>
+        </tr>
+        <tr>
+          <td>  </td>
+          <td>  </td>
+          <td>  </td>
+        </tr>
+        <tr>
+          <th>Morphology</th>
+          <th>Applicable</th>
+          <th>Modifier (%)</th>
+        </tr>
+        <tr>
+          {{ form.irregularity.errors }}
+          <td>{{ form.irregularity.label_tag }} <img class="Info" src="{% static 'uiats_fuzzy/images/info.png' %}" alt="Info" title="
+Aneurysm lobulation is defined as irregular daughter sac–like protrusion(s) of the 
+aneurysm wall on the 3-dimensional angiographic reconstruction images." width="17" height="17"></td>
+          <td>{{ form.irregularity }}</td>
+          <td>{{ form.irregularityConf }}</td>
+        </tr>
+        <tr>
+          {{ form.largeSizeOrAspectRatio.errors }}
+          <td> {{ form.largeSizeOrAspectRatio.label_tag }} <img class="Info" src="{% static 'uiats_fuzzy/images/info.png' %}" alt="Info" title="
+Aspect ratio is defined as the ratio of aneurysm dome dimension and neck width. 
+Size ratio was defined as largest aneurysm diameter divided by parent artery diameter." width="17" height="17"></td>
+          <td> {{ form.largeSizeOrAspectRatio }} </td>
+          <td> {{ form.largeSizeOrAspectRatioConf }} </td>
+        </tr>
+        <tr>
+          <td>  </td>
+          <td>  </td>
+          <td>  </td>
+        </tr>
+        <tr>
+          <th>Location </th>
+          <th> </th>
+          <th>Selection</th>
+        </tr>
+        <tr>
+          {{ form.location.errors }}
+          <td> {{ form.location.label_tag }} </td>
+          <td>  </td>
+          <td> {{ form.location }} </td>
+        </tr>
+        <tr>
+          <td>  </td>
+          <td>  </td>
+          <td>  </td>
+        </tr>
+        <tr>
+          <th>Other aneurysm-related factors</th>
+          <th>Applicable</th>
+          <th>Modifier (%)</th>
+        </tr>
+        <tr>
+          {{ form.serialImagingGrowth.errors }}
+          <td> {{ form.serialImagingGrowth.label_tag }} </td>
+          <td> {{ form.serialImagingGrowth }} </td>
+          <td> {{ form.serialImagingGrowthConf }} </td>
+        </tr>
+        <tr>
+          {{ form.serialImagingFormation.errors }}
+          <td> {{ form.serialImagingFormation.label_tag }} </td>
+          <td> {{ form.serialImagingFormation }} </td>
+          <td> {{ form.serialImagingFormationConf }} </td>
+        </tr>
+        <tr>
+          {{ form.CSVD.errors }}
+          <td> {{ form.CSVD.label_tag }} </td>
+          <td> {{ form.CSVD }} </td>
+          <td> {{ form.CSVDConf }}  </td>
+        </tr>
+        <tr>
+          <td>  </td>
+          <td>  </td>
+          <td>  </td>
+        </tr>
+        <tr>
+          <th>Treatment-related factors</th>
+          <th>Applicable</th>
+          <th>Modifier (%)</th>
+        </tr>
+        <tr>
+          {{ form.complexityRelatedRisk.errors }}
+          <td> {{ form.complexityRelatedRisk.label_tag }} <img class="Info" src="{% static 'uiats_fuzzy/images/info.png' %}" alt="Info" title="
+A complex aneurysm is defined as an aneurysm of any size that also has
+any of the following features: wide neck (greater than the diameter of
+the parent artery), significant lobulations, calcifications, intraaneurysm
+thrombus, proximal vessel tortuosity/stenosis, branch artery incorporated 
+into the neck or aneurysm sac, and very small aneurysm diameter (<3 mm).
+            " width="17" height="17"></td>
+          <td> {{ form.complexityRelatedRisk }} </td>
+          <td> {{ form.complexityRelatedRiskConf }} </td>
+        </tr>
+      </table>
+      <div><p></p></div>
+      <div class="text-center">
+        <input type="submit" value="Submit">  
+      </div>
+    </form>
+      
+    <br>
+    <br>
+    </div>
+  </body>
+</html>
