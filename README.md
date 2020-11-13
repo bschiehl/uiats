@@ -1,2 +1,6 @@
-# uiats
-A frontend for computing the unruptured intracranial aneurysm treatment score automatically
+# Running the server and using the frontend
+1. Clone this repository
+2. Optionally create a virtual environment for installing the requirements
+3. In the root folder of the project, run `pip install -r requirements.txt`
+4. Start the server with `python manage.py runserver`
+5. Go to localhost:8000 in your browser
