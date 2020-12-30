@@ -7,3 +7,7 @@ The [unruptured intracranial aneurysm treatment score (UIATS)](https://www.ncbi.
 3. In the root folder of the project, run `pip install -r requirements.txt`
 4. Start the server with `python manage.py runserver`
 5. Go to localhost:8000 in your browser (preferably chromium-based)
+
+# Preview
+![](https://github.com/bschiehl/uiats/blob/main/preview.PNG)
+To preview the whole form you can also just open the HTML document in this repository in your browser
