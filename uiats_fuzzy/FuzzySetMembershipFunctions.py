@@ -1,14 +1,16 @@
+import matplotlib.pyplot as plt
+import numpy as np
 
 def _linearInterpolation(x0, y0, x1, y1, x):
     return (y0 * (x1 - x) + y1 * (x - x0)) / (x1 - x0)
 
 def ageYoungMembership(age):
-    if (age <= 29):
+    if (age <= 30):
         return 1
-    elif (age <= 49):
-        return _linearInterpolation(29, 1, 49, 0.75, age)
+    elif (age <= 50):
+        return _linearInterpolation(30, 1, 50, 0.75, age)
     elif (age <= 65):
-        return _linearInterpolation(49, 0.75, 65, 0.5, age)
+        return _linearInterpolation(50, 0.75, 65, 0.5, age)
     elif (age <= 75):
         return _linearInterpolation(65, 0.5, 75, 0.25, age)
     elif (age <= 85):
@@ -47,10 +49,10 @@ def ageRiskHighMembership(age):
         return _linearInterpolation(85, 1, 75, 0.8, age)
     elif (age > 65):
         return _linearInterpolation(75, 0.8, 65, 0.6, age)
-    elif (age > 49):
-        return _linearInterpolation(65, 0.6, 49, 0.2, age)
-    elif (age > 29):
-        return _linearInterpolation(49, 0.2, 29, 0, age)
+    elif (age > 50):
+        return _linearInterpolation(65, 0.6, 50, 0.2, age)
+    elif (age > 30):
+        return _linearInterpolation(50, 0.2, 30, 0, age)
     else:
         return 0
 
