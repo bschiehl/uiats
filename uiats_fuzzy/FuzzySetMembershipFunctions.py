@@ -5,15 +5,15 @@ def _linearInterpolation(x0, y0, x1, y1, x):
     return (y0 * (x1 - x) + y1 * (x - x0)) / (x1 - x0)
 
 def ageYoungMembership(age):
-    if (age <= 30):
+    if (age < 30):
         return 1
-    elif (age <= 50):
+    elif (age < 50):
         return _linearInterpolation(30, 1, 50, 0.75, age)
-    elif (age <= 65):
+    elif (age < 65):
         return _linearInterpolation(50, 0.75, 65, 0.5, age)
-    elif (age <= 75):
+    elif (age < 75):
         return _linearInterpolation(65, 0.5, 75, 0.25, age)
-    elif (age <= 85):
+    elif (age < 85):
         return _linearInterpolation(75, 0.25, 85, 0, age)
     else:
         return 0
