@@ -18,27 +18,27 @@ def ageYoungMembership(age):
     else:
         return 0
     
-def lifeExpectancyLowMembership(lifeExpectancy):
-    if (lifeExpectancy < 2.5):
+def lifeExpectancyLowMembership(lifeExp):
+    if (lifeExp < 2.5):
         return 1
-    elif (lifeExpectancy < 7.5):
-        return _linearInterpolation(2.5, 1, 7.5, 2/3, lifeExpectancy)
-    elif (lifeExpectancy < 15):
-        return _linearInterpolation(7.5, 2/3, 15, 0, lifeExpectancy)
+    elif (lifeExp < 7.5):
+        return _linearInterpolation(2.5, 1, 7.5, 2/3, lifeExp)
+    elif (lifeExp < 15):
+        return _linearInterpolation(7.5, 2/3, 15, 0, lifeExp)
     else:
         return 0
 
-def maxDiameterLargeMembership(maxDiameter):
-    if (maxDiameter > 37.0):
+def maxDiameterLargeMembership(maxDia):
+    if (maxDia > 37.0):
         return 1
-    elif (maxDiameter > 19.0):
-        return _linearInterpolation(37.0, 1, 19.0, 0.75, maxDiameter)
-    elif (maxDiameter > 10.0):
-        return _linearInterpolation(19.0, 0.75, 10.0, 0.5, maxDiameter)
-    elif (maxDiameter > 5.5):
-        return _linearInterpolation(10.0, 0.5, 5.5, 0.25, maxDiameter)
-    elif (maxDiameter > 2.0):
-        return _linearInterpolation(5.5, 0.25, 2.0, 0, maxDiameter)
+    elif (maxDia > 19.0):
+        return _linearInterpolation(37.0, 1, 19.0, 0.75, maxDia)
+    elif (maxDia > 10.0):
+        return _linearInterpolation(19.0, 0.75, 10.0, 0.5, maxDia)
+    elif (maxDia > 5.5):
+        return _linearInterpolation(10.0, 0.5, 5.5, 0.25, maxDia)
+    elif (maxDia > 2.0):
+        return _linearInterpolation(5.5, 0.25, 2.0, 0, maxDia)
     else:
         return 0
 
@@ -56,14 +56,14 @@ def ageRiskHighMembership(age):
     else:
         return 0
 
-def sizeRiskHighMembership(maxDiameter):
-    if (maxDiameter > 24.0):
+def sizeRiskHighMembership(maxDia):
+    if (maxDia > 24.0):
         return 1
-    elif (maxDiameter > 15.0):
-        return _linearInterpolation(24.0, 1, 15.0, 0.6, maxDiameter)
-    elif (maxDiameter > 8.0):
-        return _linearInterpolation(15.0, 0.6, 8.0, 0.2, maxDiameter)
-    elif (maxDiameter > 3.0):
-        return _linearInterpolation(8.0, 0.2, 3.0, 0, maxDiameter)
+    elif (maxDia > 15.0):
+        return _linearInterpolation(24.0, 1, 15.0, 0.6, maxDia)
+    elif (maxDia > 8.0):
+        return _linearInterpolation(15.0, 0.6, 8.0, 0.2, maxDia)
+    elif (maxDia > 3.0):
+        return _linearInterpolation(8.0, 0.2, 3.0, 0, maxDia)
     else:
         return 0
