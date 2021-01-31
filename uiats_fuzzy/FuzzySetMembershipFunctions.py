@@ -4,6 +4,7 @@ import numpy as np
 def _linearInterpolation(x0, y0, x1, y1, x):
     return (y0 * (x1 - x) + y1 * (x - x0)) / (x1 - x0)
 
+# Fuzzy set "Young Age"
 def ageYoungMembership(age):
     if (age < 30):
         return 1
@@ -17,7 +18,8 @@ def ageYoungMembership(age):
         return _linearInterpolation(75, 0.25, 85, 0, age)
     else:
         return 0
-    
+
+# Fuzzy set "Low life expectancy"
 def lifeExpectancyLowMembership(lifeExp):
     if (lifeExp < 2.5):
         return 1
@@ -28,6 +30,7 @@ def lifeExpectancyLowMembership(lifeExp):
     else:
         return 0
 
+# Fuzzy set "Large maximum diameter"
 def maxDiameterLargeMembership(maxDia):
     if (maxDia > 37.0):
         return 1
@@ -42,6 +45,7 @@ def maxDiameterLargeMembership(maxDia):
     else:
         return 0
 
+# Fuzzy set "High age-related risk"
 def ageRiskHighMembership(age):
     if (age > 85):
         return 1
@@ -56,6 +60,7 @@ def ageRiskHighMembership(age):
     else:
         return 0
 
+# Fuzzy set "High size-related risk"
 def sizeRiskHighMembership(maxDia):
     if (maxDia > 24.0):
         return 1
