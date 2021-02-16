@@ -10,4 +10,3 @@ The [unruptured intracranial aneurysm treatment score (UIATS)](https://www.ncbi.
 
 # Preview
 ![](https://github.com/bschiehl/uiats/blob/main/preview.PNG)
-To preview the whole form you can also just open the HTML document in this repository in your browser
