@@ -1,5 +1,3 @@
-import matplotlib.pyplot as plt
-import numpy as np
 
 def _linearInterpolation(x0, y0, x1, y1, x):
     return (y0 * (x1 - x) + y1 * (x - x0)) / (x1 - x0)
